@@ -1,0 +1,110 @@
+.order-summary-container {
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 6px;
+	margin-top: 10px;
+
+	.header {
+		font-weight: 600;
+		font-size: 1.3rem;
+		line-height: 40px;
+		text-align: center;
+		color: #3498ff;
+	}
+
+	.row {
+		margin-top: 10px;
+	}
+
+	.sub-total,
+	.new-user,
+	.total {
+		font-size: 16px;
+		font-weight: 500;
+	}
+}
+
+.create-container {
+	padding: 1.2rem 0.5rem;
+	min-height: 500px;
+	background-color: #fff;
+	margin-top: 16px;
+	border-radius: 6px;
+
+	.btn-group-wrapper {
+		padding: 1rem 0.6rem;
+
+		.btn-group {
+			float: right;
+		}
+	}
+}
+
+.detail-form {
+	padding: 2rem 0;
+
+	.required-dot {
+		font-size: 13px;
+		margin-bottom: 4px;
+		color: red;
+	}
+
+	.optional {
+		font-size: 10px;
+	}
+}
+
+.uploader {
+	.upload-box {
+		height: 280px;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		justify-content: center;
+
+		.upload-text {
+			font-size: 16px;
+			margin-top: 10px;
+			text-align: center;
+		}
+	}
+
+	.radio-control {
+		margin-top: 20px;
+
+		.required-dot {
+			font-size: 13px;
+			margin-bottom: 4px;
+			color: red;
+		}
+
+		.radio-group {
+			margin-top: 10px;
+			border: none;
+
+			.rs-radio-checked {
+				border: 1px solid rgba(0, 0, 0, 0.3);
+			}
+
+			.thumb-img {
+				height: 100px;
+				width: 100px;
+				object-fit: cover;
+			}
+		}
+	}
+}
+
+.additional-detail-form {
+	padding: 2rem 0;
+
+	.required-dot {
+		font-size: 13px;
+		margin-bottom: 4px;
+		color: red;
+	}
+
+	.optional {
+		font-size: 10px;
+	}
+}
