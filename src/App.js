@@ -18,7 +18,14 @@ export default function App() {
           <Countdown date={Date.now() + 8460000} renderer={renderer} />
         </div>
         <div className="i-container">
-          <Illustration />
+          <lottie-player
+            src="https://assets7.lottiefiles.com/packages/lf20_hcae8wxn.json"
+            background="transparent"
+            speed="1"
+            loop
+            nocontrols
+            autoplay
+          ></lottie-player>
         </div>
       </div>
       <footer>
