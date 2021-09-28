@@ -1,68 +1,79 @@
-import React from "react";
-import "./App.css";
-import logo from "./media/logo.png";
-import { ReactComponent as Illustration } from "./media/anim-svg.svg";
-import Countdown from "react-countdown";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  createContext,
+} from "react";
+import "rsuite/dist/styles/rsuite-default.css";
+import "./app.scss";
+import defaultImage from "./media/test.png";
+
+//  Components from Rsuite
+import { motion } from "framer-motion";
+
+// Components
+import CoverPopover from "./components/CoverPopover";
+import { Button } from "rsuite";
+import ConfirmUpload from "./components/ConfirmUpload";
 
 export default function App() {
+  const [contraints, setConstraints] = useState(0);
+  const [pos, setPos] = useState(0);
+  const [draggable, setDraggable] = useState(false);
+  const [deafaultImg, setDefaultImg] = useState(defaultImage);
+  const [img, setImg] = useState("");
+  const boxRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    setConstraints(0);
+  }, [img]);
+
+  const _drag = (e) => {
+    const { top } = boxRef.current.getBoundingClientRect();
+    setPos(top);
+  };
+
+  const _load = useCallback(() => {
+    const parentHeight = containerRef.current.offsetHeight;
+    const childHeight = boxRef.current.offsetHeight;
+    setConstraints(childHeight - parentHeight - 10);
+  }, []);
+
   return (
-    <div className="landing-page">
-      <div className="container-wrapper">
-        <div className="top-bar">
-          <img src={logo} alt="logo" />
-          <p>
-            We are launching the alpha release of Hoorrey - The Next Gen Social
-            Network very soon.
-          </p>
-          <p style={{ fontWeight: 500 }}>Projected Time is:</p>
-          <Countdown date={Date.now() + 8460000} renderer={renderer} />
-        </div>
-        <div className="i-container">
-          <lottie-player
-            src="https://assets7.lottiefiles.com/packages/lf20_hcae8wxn.json"
-            background="transparent"
-            speed="1"
-            loop
-            nocontrols
-            autoplay
-          ></lottie-player>
-        </div>
+    <div className="cover">
+      <div ref={containerRef} className="drag-area">
+        {draggable || img ? (
+          <ConfirmUpload setDraggable={setDraggable} setImg={setImg} />
+        ) : (
+          ""
+        )}
+        <motion.div
+          ref={boxRef}
+          drag={draggable || img ? "y" : ""}
+          onDrag={_drag}
+          dragConstraints={{
+            top: -contraints,
+            bottom: 0,
+          }}
+          dragElastic={false}
+          className="img-container"
+        >
+          <img
+            src={img ? URL.createObjectURL(img) : defaultImage}
+            className="box"
+            onLoad={_load}
+          />
+        </motion.div>
+        <CoverPopover
+          setImg={setImg}
+          draggable={draggable}
+          setDraggable={setDraggable}
+        >
+          <Button className="cover-controls">Upload</Button>
+        </CoverPopover>
       </div>
-      <footer>
-        © Copyright{"  "}
-        <span>
-          <img src={logo} alt="logo" style={{ height: 24 }} />
-        </span>
-        {"  "}
-        All Rights Reserved
-      </footer>
     </div>
   );
 }
-
-const renderer = ({ days, hours, minutes, seconds }) => {
-  console.log(days);
-  return (
-    <div className="countdown">
-      <div className="col-1">
-        <div className="days">{days < 10 ? "0" + days : days}</div>
-        <h3>Days</h3>
-      </div>
-      <div className="colon">:</div>
-      <div className="col-2">
-        <div className="hours">{hours < 10 ? "0" + hours : hours}</div>
-        <h3>Hours</h3>
-      </div>
-      <div className="colon">:</div>
-      <div className="col-3">
-        <div className="minutes">{minutes < 10 ? "0" + minutes : minutes}</div>
-        <h3>Mins</h3>
-      </div>
-      <div className="colon">:</div>
-      <div className="col-4">
-        <div className="seconds">{seconds < 10 ? "0" + seconds : seconds}</div>
-        <h3>secs</h3>
-      </div>
-    </div>
-  );
-};
